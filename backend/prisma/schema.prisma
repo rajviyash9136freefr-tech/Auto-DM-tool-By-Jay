@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── User ──
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  instagramAccount InstagramAccount?
+  media            Media[]
+  automations      Automation[]
+  leads            Lead[]
+}
+
+// ── Instagram Account ──
+model InstagramAccount {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  username    String
+  accessToken String
+  profilePic  String?
+  connectedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ── Media (Reels / Posts) ──
+model Media {
+  id               String   @id @default(cuid())
+  userId           String
+  instagramMediaId String?
+  caption          String?
+  mediaUrl         String?
+  thumbnailUrl     String?
+  mediaType        String   @default("REEL")
+  likes            Int      @default(0)
+  comments         Int      @default(0)
+  views            Int      @default(0)
+  createdAt        DateTime @default(now())
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  automations Automation[]
+
+  @@index([userId])
+}
+
+// ── Automation ──
+model Automation {
+  id        String   @id @default(cuid())
+  userId    String
+  mediaId   String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  media     Media     @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  keywords  Keyword[]
+  resources Resource[]
+
+  @@index([userId])
+  @@index([mediaId])
+}
+
+// ── Keyword Trigger ──
+model Keyword {
+  id           String @id @default(cuid())
+  automationId String
+  keyword      String
+  replyMessage String
+  replyType    String @default("DM") // DM or COMMENT
+  delay        Int    @default(0)     // delay in seconds
+
+  automation Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
+
+  @@index([automationId])
+}
+
+// ── Super Profile Resource ──
+model Resource {
+  id           String @id @default(cuid())
+  automationId String
+  title        String
+  url          String
+  type         String @default("LINK") // LINK, FILE, VIDEO
+  order        Int    @default(0)
+
+  automation Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
+
+  @@index([automationId])
+}
+
+// ── Lead ──
+model Lead {
+  id        String   @id @default(cuid())
+  userId    String
+  username  String
+  message   String?
+  mediaId   String?
+  source    String   @default("COMMENT") // COMMENT, DM, STORY
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}

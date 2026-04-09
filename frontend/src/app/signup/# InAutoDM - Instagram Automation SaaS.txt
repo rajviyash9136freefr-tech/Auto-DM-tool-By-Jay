@@ -1,0 +1,7 @@
+# InAutoDM - Instagram Automation SaaS
+
+
+# InAutoDM
+AI-powered Instagram Automation platform to scale your business effortlessly.
+[Start Setup](http://localhost:3001/signup)
+[Explore Dashboard](http://localhost:3001/dashboard)
