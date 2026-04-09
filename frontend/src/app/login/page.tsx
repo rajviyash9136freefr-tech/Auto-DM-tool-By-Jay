@@ -37,7 +37,7 @@ export default function LoginPage() {
             />
           </div>
 
-          <Link href="/onboarding" className="w-full mt-6 bg-primary text-primary-foreground font-medium py-2.5 rounded-lg transition-transform active:scale-95 hover:bg-primary/90 flex items-center justify-center gap-2">
+          <Link href="/dashboard" className="w-full mt-6 bg-primary text-primary-foreground font-medium py-2.5 rounded-lg transition-transform active:scale-95 hover:bg-primary/90 flex items-center justify-center gap-2">
             Sign In
             <ArrowRight className="w-4 h-4" />
           </Link>
