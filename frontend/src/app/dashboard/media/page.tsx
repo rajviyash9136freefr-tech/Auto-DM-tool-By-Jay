@@ -17,12 +17,8 @@ import { InstagramLock } from "@/components/instagram-lock"
 export default function MediaPage() {
   const { isInstagramConnected } = useAppStore()
 
-  if (!isInstagramConnected) {
-    return <InstagramLock title="Media Library Locked" description="Connect your Instagram account to manage automations for your latest reels and posts." />
-  }
-
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${!isInstagramConnected ? "opacity-50 pointer-events-none blur-[2px]" : ""}`}>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Media Library</h2>
@@ -44,9 +40,7 @@ export default function MediaPage() {
         </div>
       </div>
 
-      </div>
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {mockReels.map((reel) => (
           <Link key={reel.id} href={`/dashboard/media/${reel.id}`} className="group relative aspect-[9/16] rounded-xl overflow-hidden bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer block block">
             <img 

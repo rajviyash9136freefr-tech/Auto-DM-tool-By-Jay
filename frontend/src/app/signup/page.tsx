@@ -2,8 +2,12 @@
 
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { useAppStore } from "@/store/use-app-store"
+import { useRouter } from "next/navigation"
 
 export default function SignupPage() {
+  const { login } = useAppStore()
+  const router = useRouter()
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-background">
       <div className="w-full max-w-md space-y-8 bg-card p-8 rounded-2xl border border-border shadow-2xl relative overflow-hidden">
@@ -43,10 +47,13 @@ export default function SignupPage() {
             />
           </div>
 
-          <Link href="/dashboard" className="w-full mt-6 bg-primary text-primary-foreground font-medium py-2.5 rounded-lg transition-transform active:scale-95 hover:bg-primary/90 flex items-center justify-center gap-2">
+          <button onClick={() => {
+            login()
+            router.push('/dashboard')
+          }} className="w-full mt-6 bg-primary text-primary-foreground font-medium py-2.5 rounded-lg transition-transform active:scale-95 hover:bg-primary/90 flex items-center justify-center gap-2">
             Sign Up
             <ArrowRight className="w-4 h-4" />
-          </Link>
+          </button>
         </form>
 
         <div className="flex flex-col items-center justify-center gap-2 text-sm mt-6">

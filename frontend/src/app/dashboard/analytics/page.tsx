@@ -8,12 +8,8 @@ import { InstagramLock } from "@/components/instagram-lock"
 export default function AnalyticsPage() {
   const { isInstagramConnected } = useAppStore()
 
-  if (!isInstagramConnected) {
-    return <InstagramLock title="Analytics Locked" description="Connect your Instagram account to view your live performance tracking." />
-  }
-
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${!isInstagramConnected ? "opacity-50 pointer-events-none blur-[2px]" : ""}`}>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Analytics</h2>

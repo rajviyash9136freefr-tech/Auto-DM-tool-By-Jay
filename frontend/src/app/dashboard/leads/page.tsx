@@ -16,12 +16,8 @@ import { InstagramLock } from "@/components/instagram-lock"
 export default function LeadsPage() {
   const { isInstagramConnected } = useAppStore()
 
-  if (!isInstagramConnected) {
-    return <InstagramLock title="Leads Database Locked" description="Connect your Instagram account to start capturing real data and viewing your leads." />
-  }
-
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${!isInstagramConnected ? "opacity-50 pointer-events-none blur-[2px]" : ""}`}>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Leads Database</h2>
