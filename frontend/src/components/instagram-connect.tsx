@@ -1,7 +1,7 @@
 "use client"
 
 import { useAppStore } from "@/store/use-app-store"
-import { CheckCircle2, Instagram, Unplug } from "lucide-react"
+import { CheckCircle, Camera, Unplug } from "lucide-react"
 
 export function InstagramConnect() {
   const { isInstagramConnected, connectInstagram, disconnectInstagram } = useAppStore()
@@ -44,8 +44,8 @@ export function InstagramConnect() {
     <div className="w-full bg-card border border-border p-6 rounded-2xl flex flex-col items-center justify-center text-center gap-4 relative overflow-hidden group">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
       
-      <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 flex items-center justify-center shadow-lg shadow-pink-500/20">
-        <Instagram className="w-8 h-8 text-white" />
+      <div className="w-12 h-12 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 rounded-full flex items-center justify-center">
+        <Camera className="w-6 h-6 text-white" />
       </div>
       
       <div className="space-y-1">

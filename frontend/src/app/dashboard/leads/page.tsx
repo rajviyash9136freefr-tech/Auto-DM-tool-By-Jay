@@ -1,7 +1,7 @@
 "use client"
 
 import { useAppStore } from "@/store/use-app-store"
-import { Download, Search, CheckCircle2, Circle } from "lucide-react"
+import { Download, Search, CheckCircle, Circle } from "lucide-react"
 
 const mockLeads = Array.from({ length: 15 }).map((_, i) => ({
   id: i + 1,
@@ -60,7 +60,7 @@ export default function LeadsPage() {
                               <td className="px-6 py-4 text-muted-foreground">{lead.resource}</td>
                               <td className="px-6 py-4">
                                   <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${lead.status === 'Clicked' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-primary/10 text-primary'}`}>
-                                      {lead.status === 'Clicked' ? <CheckCircle2 className="w-3 h-3" /> : <Circle className="w-3 h-3" />}
+                                      {lead.status === 'Clicked' ? <CheckCircle className="w-3 h-3" /> : <Circle className="w-3 h-3" />}
                                       {lead.status}
                                   </span>
                               </td>
