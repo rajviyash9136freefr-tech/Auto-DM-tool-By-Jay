@@ -21,7 +21,7 @@ export function InstagramConnect() {
               </div>
             </div>
             <div className="absolute -bottom-1 -right-1 bg-background rounded-full p-0.5">
-              <CheckCircle2 className="w-5 h-5 text-emerald-500 fill-emerald-500/20" />
+              <CheckCircle className="w-5 h-5 text-emerald-500 fill-emerald-500/20" />
             </div>
           </div>
           <div>

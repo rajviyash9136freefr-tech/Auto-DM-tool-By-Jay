@@ -1,7 +1,7 @@
 "use client"
 
 import { useAppStore } from "@/store/use-app-store"
-import { Search, Filter, Play, Heart, MessageCircle } from "lucide-react"
+import { Search, Filter, Play, Heart, MessageCircle, MessageSquare } from "lucide-react"
 import Link from "next/link"
 
 const mockReels = Array.from({ length: 8 }).map((_, i) => ({
