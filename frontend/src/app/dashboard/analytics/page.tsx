@@ -3,8 +3,14 @@
 import { useAppStore } from "@/store/use-app-store"
 import { BarChart3, TrendingUp } from "lucide-react"
 
+import { InstagramLock } from "@/components/instagram-lock"
+
 export default function AnalyticsPage() {
   const { isInstagramConnected } = useAppStore()
+
+  if (!isInstagramConnected) {
+    return <InstagramLock title="Analytics Locked" description="Connect your Instagram account to view your live performance tracking." />
+  }
 
   return (
     <div className="space-y-6">
@@ -19,13 +25,6 @@ export default function AnalyticsPage() {
           <option>All Time</option>
         </select>
       </div>
-
-      {!isInstagramConnected && (
-        <div className="bg-primary/10 border border-primary/20 rounded-xl p-4">
-           <h3 className="font-semibold text-primary">Demo Analytics</h3>
-           <p className="text-sm text-muted-foreground mt-1">Connect Instagram to view your real account performance.</p>
-        </div>
-      )}
 
       {/* Main Charts Mock */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

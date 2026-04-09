@@ -1,6 +1,16 @@
+"use client"
+
 import { ArrowUpRight, MessageSquare, Users, Eye, PlaySquare } from "lucide-react"
+import { useAppStore } from "@/store/use-app-store"
+import { InstagramLock } from "@/components/instagram-lock"
 
 export default function DashboardPage() {
+  const { isInstagramConnected } = useAppStore()
+
+  if (!isInstagramConnected) {
+    return <InstagramLock title="Dashboard Locked" description="Connect your Instagram account to view your live stats and activity." />
+  }
+
   const stats = [
     { name: "Total Leads", value: "1,240", change: "+12.5%", icon: Users },
     { name: "DM Replies Sent", value: "8,392", change: "+4.1%", icon: MessageSquare },
@@ -10,17 +20,6 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      
-      {/* Banner if not connected (Mocked for now) */}
-      <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h3 className="font-semibold text-primary">Connect Instagram to unlock automation</h3>
-          <p className="text-sm text-muted-foreground">Your account is currently in limited exploration mode.</p>
-        </div>
-        <button className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors whitespace-nowrap whitespace-nowrap">
-          Connect Now
-        </button>
-      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (

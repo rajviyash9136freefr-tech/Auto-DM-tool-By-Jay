@@ -11,8 +11,14 @@ const mockLeads = Array.from({ length: 15 }).map((_, i) => ({
   date: new Date(Date.now() - Math.floor(Math.random() * 10000000000)).toLocaleDateString(),
 }))
 
+import { InstagramLock } from "@/components/instagram-lock"
+
 export default function LeadsPage() {
   const { isInstagramConnected } = useAppStore()
+
+  if (!isInstagramConnected) {
+    return <InstagramLock title="Leads Database Locked" description="Connect your Instagram account to start capturing real data and viewing your leads." />
+  }
 
   return (
     <div className="space-y-6">
@@ -28,13 +34,6 @@ export default function LeadsPage() {
           </button>
         </div>
       </div>
-
-      {!isInstagramConnected && (
-        <div className="bg-primary/10 border border-primary/20 rounded-xl p-4">
-           <h3 className="font-semibold text-primary">No real leads yet</h3>
-           <p className="text-sm text-muted-foreground mt-1">Connect Instagram to start capturing real data. Showing demo data below.</p>
-        </div>
-      )}
 
       <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden flex flex-col">
           <div className="p-4 border-b border-border flex gap-4">

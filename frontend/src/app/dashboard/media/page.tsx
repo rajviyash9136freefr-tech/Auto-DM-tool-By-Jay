@@ -12,8 +12,14 @@ const mockReels = Array.from({ length: 8 }).map((_, i) => ({
   comments: Math.floor(Math.random() * 500) + 10,
 }))
 
+import { InstagramLock } from "@/components/instagram-lock"
+
 export default function MediaPage() {
   const { isInstagramConnected } = useAppStore()
+
+  if (!isInstagramConnected) {
+    return <InstagramLock title="Media Library Locked" description="Connect your Instagram account to manage automations for your latest reels and posts." />
+  }
 
   return (
     <div className="space-y-6">
@@ -38,17 +44,7 @@ export default function MediaPage() {
         </div>
       </div>
 
-      {!isInstagramConnected && (
-        <div className="bg-primary/10 border border-primary/20 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <h3 className="font-semibold text-primary">Connect Instagram to manage real media</h3>
-            <p className="text-sm text-muted-foreground">Currently displaying demo content to preview system capabilities.</p>
-          </div>
-          <Link href="/dashboard/settings" className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors whitespace-nowrap">
-            Connect
-          </Link>
-        </div>
-      )}
+      </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {mockReels.map((reel) => (
