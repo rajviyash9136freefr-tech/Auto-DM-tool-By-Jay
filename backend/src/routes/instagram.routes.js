@@ -4,10 +4,13 @@ const { protect } = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 
-router.use(protect); // All instagram routes are protected
+// OAuth initiation and callback (Public because they are triggered by browser redirects)
+router.get('/auth', instagramController.initiateAuth);
+router.get('/callback', instagramController.handleCallback);
 
-router.post('/connect', instagramController.connect);
-router.get('/account', instagramController.getAccount);
-router.delete('/disconnect', instagramController.disconnect);
+// Protected routes
+router.get('/account', protect, instagramController.getAccount);
+router.delete('/disconnect', protect, instagramController.disconnect);
 
 module.exports = router;
+

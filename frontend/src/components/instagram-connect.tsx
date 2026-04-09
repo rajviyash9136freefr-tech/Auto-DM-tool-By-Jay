@@ -4,9 +4,19 @@ import { useAppStore } from "@/store/use-app-store"
 import { CheckCircle, Camera, Unplug } from "lucide-react"
 
 export function InstagramConnect() {
-  const { isInstagramConnected, connectInstagram, disconnectInstagram } = useAppStore()
+  const { isInstagramConnected, connectedAccount, disconnectInstagram, token } = useAppStore()
 
-  if (isInstagramConnected) {
+  const handleConnect = () => {
+    if (!token) {
+      alert("Please login first")
+      return
+    }
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+    // Redirect to backend auth flow
+    window.location.href = `${API_URL}/api/instagram/auth?token=${token}`
+  }
+
+  if (isInstagramConnected && connectedAccount) {
     return (
       <div className="w-full bg-card border border-border p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 justify-between transition-all">
         <div className="flex items-center gap-4">
@@ -14,7 +24,7 @@ export function InstagramConnect() {
             <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 p-1">
               <div className="w-full h-full rounded-full bg-card flex items-center justify-center overflow-hidden border-2 border-background">
                 <img 
-                  src="https://api.dicebear.com/7.x/notionists/svg?seed=Felix&backgroundColor=transparent" 
+                  src={connectedAccount.profilePic || "https://api.dicebear.com/7.x/notionists/svg?seed=Felix&backgroundColor=transparent"} 
                   alt="Profile" 
                   className="w-12 h-12 object-cover" 
                 />
@@ -25,17 +35,26 @@ export function InstagramConnect() {
             </div>
           </div>
           <div>
-            <h3 className="font-bold text-lg">@johndoe_automata</h3>
+            <h3 className="font-bold text-lg">@{connectedAccount.username}</h3>
             <p className="text-sm text-emerald-500 font-medium">Successfully Connected</p>
           </div>
         </div>
-        <button 
-          onClick={disconnectInstagram}
-          className="px-4 py-2 text-sm font-medium border border-destructive/50 text-destructive rounded-lg hover:bg-destructive/10 transition-colors flex items-center gap-2"
-        >
-          <Unplug className="w-4 h-4" />
-          Disconnect
-        </button>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button 
+            onClick={handleConnect}
+            className="px-4 py-2 text-sm font-medium border border-border text-card-foreground rounded-lg hover:bg-muted transition-colors flex items-center gap-2"
+          >
+            <Camera className="w-4 h-4" />
+            Switch Account
+          </button>
+          <button 
+            onClick={disconnectInstagram}
+            className="px-4 py-2 text-sm font-medium border border-destructive/50 text-destructive rounded-lg hover:bg-destructive/10 transition-colors flex items-center gap-2"
+          >
+            <Unplug className="w-4 h-4" />
+            Disconnect
+          </button>
+        </div>
       </div>
     )
   }
@@ -56,7 +75,7 @@ export function InstagramConnect() {
       </div>
 
       <button 
-        onClick={connectInstagram}
+        onClick={handleConnect}
         className="mt-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-lg font-medium transition-all shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
       >
         Connect via Meta

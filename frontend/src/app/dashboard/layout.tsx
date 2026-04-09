@@ -33,14 +33,16 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname()
   const router = useRouter()
-  const { isInstagramConnected, isAuthenticated, logout } = useAppStore()
+  const { isInstagramConnected, isAuthenticated, logout, fetchAccount } = useAppStore()
 
   useEffect(() => {
     // Basic protection logic
     if (!isAuthenticated) {
       router.push("/login")
+    } else {
+      fetchAccount()
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, router, fetchAccount])
 
   if (!isAuthenticated) return null // Prevent flash of dashboard
 
